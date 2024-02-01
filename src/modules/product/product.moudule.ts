@@ -4,6 +4,7 @@ import { Product, ProductSchema } from "src/database/schemas/product.schema";
 import { ProductController } from "./controller/product.controller";
 import { ProductService } from "./service/product.service";
 import { ProductRepository } from "./repository/product.repository";
+import { CloudinaryService } from "src/common/cloudinary/cloudinary.service";
 
 @Module({
     imports: [
@@ -12,7 +13,7 @@ import { ProductRepository } from "./repository/product.repository";
         ]),
     ],
     controllers: [ProductController],
-    providers: [ProductService, ProductRepository],
+    providers: [ProductService, ProductRepository,CloudinaryService],
     exports: [ProductRepository],
 })
 export class ProductModule {}

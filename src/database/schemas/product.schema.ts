@@ -17,8 +17,8 @@ export class Product extends MongoBaseSchema {
     @Prop({ required: true, type: String })
     name: string;
 
-    @Prop({ required: true, type: String })
-    price: string;
+    @Prop({ required: true, type: Number })
+    price: number;
 
     @Prop({ required: true, type: Number })
     quantity: number;
