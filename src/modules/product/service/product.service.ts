@@ -2,7 +2,9 @@ import { BaseService } from "src/common/base/base.service";
 import { Product } from "src/database/schemas/product.schema";
 import { ProductRepository } from "../repository/product.repository";
 import { Injectable } from "@nestjs/common";
-import { createDto } from "../dto/product.interface";
+import { GetProductListQuery, createDto } from "../dto/product.interface";
+import { Types } from "mongoose";
+import { ProductAttributesForList } from "../product.constants";
 
 
 
@@ -19,10 +21,40 @@ export class ProductService extends BaseService<Product,ProductRepository>
                 ...(dto as any),
             };
             const res= await this.productRepository.createOne(product)
-            // console.log(res)
             return res;
         } catch (error) {
             this.logger.error('Error in productService createproduct: ' + error);
+            throw error;
+        }
+    }
+    async findProductById(
+        id: Types.ObjectId,
+        attributes: (keyof Product)[] = ProductAttributesForList,
+    ) {
+        try {
+            return await this.productRepository.getOneById(id, attributes);
+        } catch (error) {
+            this.logger.error('Error in ProductService findProductById: ' + error);
+            throw error;
+        }
+    }
+    async deleteProduct(id: Types.ObjectId) {
+        try {
+            await this.productRepository.softDeleteOne({ _id: id });
+            return { id };
+        } catch (error) {
+            this.logger.error('Error in ProductService deleteProduct: ' + error);
+            throw error;
+        }
+    }
+    async findAllAndCountProductByQuery(query: GetProductListQuery) {
+        try {
+            const result =await this.productRepository.findAllAndCountProductByQuery(query);
+            return result;
+        } catch (error) {
+            this.logger.error(
+                'Error in ProductService findAllAndCountProductByQuery: ' + error,
+            );
             throw error;
         }
     }
