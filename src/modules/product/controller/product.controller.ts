@@ -1,13 +1,13 @@
-import { BaseController } from "src/common/base/base.controller";
+import { BaseController } from "../../../common/base/base.controller";
 import { ProductService } from '../service/product.service';
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, Query, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from "@nestjs/common";
-import { TrimBodyPipe } from "src/common/helper/pipe/trim.body.pipe";
+import { TrimBodyPipe } from "../../../common/helper/pipe/trim.body.pipe";
 import { GetProductListQuery, createDto, updateDto } from "../dto/product.interface";
-import { CloudinaryService } from "src/common/cloudinary/cloudinary.service";
+import { CloudinaryService } from "../../../common/cloudinary/cloudinary.service";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { SuccessResponse } from "src/common/helper/response";
+import { SuccessResponse } from "../../../common/helper/response";
 import mongoose from "mongoose";
-import { toObjectId } from "src/common/helper/commonFunction";
+import { toObjectId } from "../../../common/helper/commonFunction";
 
 @Controller('product')
 export class ProductController extends BaseController{

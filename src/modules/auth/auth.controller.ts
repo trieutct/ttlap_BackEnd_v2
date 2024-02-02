@@ -1,9 +1,9 @@
 import { Body, Controller, Post } from "@nestjs/common";
-import { BaseController } from "src/common/base/base.controller";
+import { BaseController } from "../../common/base/base.controller";
 import { AuthService } from "./auth.service";
-import { TrimBodyPipe } from "src/common/helper/pipe/trim.body.pipe";
+import { TrimBodyPipe } from "../../common/helper/pipe/trim.body.pipe";
 import { LoginDto } from "./auth.interface";
-import { SuccessResponse } from "src/common/helper/response";
+import { SuccessResponse } from "../../common/helper/response";
 
 
 @Controller('auth')

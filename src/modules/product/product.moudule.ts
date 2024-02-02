@@ -1,10 +1,10 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
-import { Product, ProductSchema } from "src/database/schemas/product.schema";
+import { Product, ProductSchema } from "../../database/schemas/product.schema";
 import { ProductController } from "./controller/product.controller";
 import { ProductService } from "./service/product.service";
 import { ProductRepository } from "./repository/product.repository";
-import { CloudinaryService } from "src/common/cloudinary/cloudinary.service";
+import { CloudinaryService } from "../../common/cloudinary/cloudinary.service";
 
 @Module({
     imports: [

@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumber, IsOptional, IsString, Matches } from "class-validator";
 import {  UserOrderBy } from "../user.constant";
-import { CommonListQuery } from "src/common/interfaces";
+import { CommonListQuery } from "../../../common/interfaces";
 const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 export class createUserDto{

@@ -1,5 +1,5 @@
-import { BaseService } from "src/common/base/base.service";
-import { User } from "src/database/schemas/user.schema";
+import { BaseService } from "../../../common/base/base.service";
+import { User } from "../../../database/schemas/user.schema";
 import { UserRepository } from "../repositoy/user.repository";
 import { Injectable } from "@nestjs/common";
 import { GetUserListQuery, createUserDto,UpdateUserDto } from "../dto/user.interface";

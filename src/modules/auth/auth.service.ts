@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
-import { BaseService } from "src/common/base/base.service";
-import { User } from "src/database/schemas/user.schema";
+import { BaseService } from "../../common/base/base.service";
+import { User } from "../../database/schemas/user.schema";
 import { AuthRepository } from "./auth.repository";
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from "./auth.interface";
-import { jwtConstants } from "src/common/constants";
+import { jwtConstants } from "../../common/constants";
 
 @Injectable()
 export class AuthService extends BaseService<User,AuthRepository>

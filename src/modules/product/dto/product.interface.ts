@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 import { ProductOrderBy } from "../product.constants";
-import { CommonListQuery } from "src/common/interfaces";
+import { CommonListQuery } from "../../../common/interfaces";
 
 export class createDto{
     @IsNotEmpty({ message: 'Không được để trống' })
