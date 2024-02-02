@@ -1,8 +1,8 @@
 import { BaseController } from "src/common/base/base.controller";
-import { ProductService } from '../service/product.service';
+import { UserService } from '../service/user.service';
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, Query, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from "@nestjs/common";
 import { TrimBodyPipe } from "src/common/helper/pipe/trim.body.pipe";
-import { GetProductListQuery, createDto, updateDto } from "../dto/product.interface";
+import { GetUserListQuery, createUserDto, UpdateUserDto } from "../dto/user.interface";
 import { CloudinaryService } from "src/common/cloudinary/cloudinary.service";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { SuccessResponse } from "src/common/helper/response";
@@ -10,27 +10,27 @@ import mongoose from "mongoose";
 import { toObjectId } from "src/common/helper/commonFunction";
 
 @Controller('product')
-export class ProductController extends BaseController{
+export class UserController extends BaseController{
     constructor(
-        private readonly productService: ProductService,private readonly cloudinaryService:CloudinaryService
+        private readonly UserService: UserService,private readonly cloudinaryService:CloudinaryService
     ) {
         super();
     }
     @Get()
-    async getall(@Query()query :GetProductListQuery)
+    async getall(@Query()query :GetUserListQuery)
     {
-        return await this.productService.findAllAndCountProductByQuery(query);
+        return await this.UserService.findAllAndCountUserByQuery(query);
     }
     @UseInterceptors(FileInterceptor('file'))
     @Post()
-    async create(@Body(new TrimBodyPipe()) dto: createDto,@UploadedFile() file,)
+    async create(@Body(new TrimBodyPipe()) dto: createUserDto,@UploadedFile() file,)
     {
         try{
             if (file != null) {
                 const url = await this.cloudinaryService.uploadImage(file);
-                dto.imageUrl = url;
+                dto.avatar = url;
             }
-            const result=await this.productService.createProduct(dto)
+            const result=await this.UserService.createUser(dto)
             return new SuccessResponse(result)
         }catch (error) {
             this.handleError(error);
@@ -39,9 +39,9 @@ export class ProductController extends BaseController{
     }
     @UseInterceptors(FileInterceptor('file'))
     @Put(':id')
-    async updateProduct(@Param('id')id:string,
+    async update(@Param('id')id:string,
     @Body(new TrimBodyPipe())
-    dto:updateDto,
+    dto:UpdateUserDto,
     @UploadedFile() file)
     {
         try
@@ -51,17 +51,17 @@ export class ProductController extends BaseController{
             {
                 throw new HttpException("Id không giống định dạng",HttpStatus.BAD_REQUEST);
             }
-            const product=await this.productService.findProductById(toObjectId(id));
+            const product=await this.UserService.findProductById(toObjectId(id));
             if(file)
             {
                 const url = await this.cloudinaryService.uploadImage(file);
-                dto.imageUrl = url;
+                dto.avatar = url;
             }
             else
             {
-                dto.imageUrl=product.imageUrl
+                dto.avatar=product.avatar
             }
-            const result=await this.productService.updateProduct(toObjectId(id),dto);
+            const result=await this.UserService.updateUser(toObjectId(id),dto);
             if(result)
                 return new SuccessResponse(result)
             throw new HttpException("Cập nhật thất bại",HttpStatus.INTERNAL_SERVER_ERROR);
@@ -72,7 +72,7 @@ export class ProductController extends BaseController{
         }
     }
     @Get(':id')
-    async getProductById(@Param('id')id:string,)
+    async getUserById(@Param('id')id:string,)
     {
         try{
             const isValid=mongoose.Types.ObjectId.isValid(id)
@@ -80,7 +80,7 @@ export class ProductController extends BaseController{
             {
                 throw new HttpException("Id không giống định dạng",HttpStatus.BAD_REQUEST);
             }
-            const result = await this.productService.findProductById(toObjectId(id));
+            const result = await this.UserService.findProductById(toObjectId(id));
             if(result)
                 return new SuccessResponse(result);
             throw new HttpException("Không tìm thấy product",HttpStatus.NOT_FOUND);
@@ -97,7 +97,7 @@ export class ProductController extends BaseController{
         {
             throw new HttpException("Id không giống định dạng",HttpStatus.BAD_REQUEST);
         }
-        const result=await this.productService.deleteProduct(toObjectId(id))
+        const result=await this.UserService.deleteProduct(toObjectId(id))
         if(result)
             return new SuccessResponse(result);
         throw new HttpException("Không tìm thấy product",HttpStatus.NOT_FOUND);
