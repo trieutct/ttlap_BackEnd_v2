@@ -21,6 +21,25 @@ export class createDto{
     @IsOptional()
     imageUrl?: string;
 }
+export class updateDto{
+    @IsNotEmpty({ message: 'Không được để trống' })
+    @IsString({ message: 'Tên sản phẩm phải là một chuỗi' })
+    name: string;
+
+    @IsNotEmpty({ message: 'Không được để trống' })
+    price: number;
+
+    @IsNotEmpty({ message: 'Không được để trống' })
+    quantity: number;
+    
+    @IsNotEmpty({ message: 'Không được để trống' })
+    @IsString()
+    description: string;
+
+    @IsString()
+    @IsOptional()
+    imageUrl?: string;
+}
 
 
 export class GetProductListQuery extends CommonListQuery {

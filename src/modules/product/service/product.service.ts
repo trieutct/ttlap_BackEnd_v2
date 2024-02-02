@@ -2,7 +2,7 @@ import { BaseService } from "src/common/base/base.service";
 import { Product } from "src/database/schemas/product.schema";
 import { ProductRepository } from "../repository/product.repository";
 import { Injectable } from "@nestjs/common";
-import { GetProductListQuery, createDto } from "../dto/product.interface";
+import { GetProductListQuery, createDto, updateDto } from "../dto/product.interface";
 import { Types } from "mongoose";
 import { ProductAttributesForList } from "../product.constants";
 
@@ -55,6 +55,15 @@ export class ProductService extends BaseService<Product,ProductRepository>
             this.logger.error(
                 'Error in ProductService findAllAndCountProductByQuery: ' + error,
             );
+            throw error;
+        }
+    }
+    async updateProduct(id: Types.ObjectId, dto: updateDto) {
+        try {
+            await this.productRepository.updateOneById(id, dto);
+            return await this.findProductById(id);
+        } catch (error) {
+            this.logger.error('Error in ProductService updateProduct: ' + error);
             throw error;
         }
     }

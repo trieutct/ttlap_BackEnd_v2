@@ -1,8 +1,8 @@
 import { BaseController } from "src/common/base/base.controller";
 import { ProductService } from '../service/product.service';
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Query, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, Query, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from "@nestjs/common";
 import { TrimBodyPipe } from "src/common/helper/pipe/trim.body.pipe";
-import { GetProductListQuery, createDto } from "../dto/product.interface";
+import { GetProductListQuery, createDto, updateDto } from "../dto/product.interface";
 import { CloudinaryService } from "src/common/cloudinary/cloudinary.service";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { SuccessResponse } from "src/common/helper/response";
@@ -36,6 +36,40 @@ export class ProductController extends BaseController{
         }catch (error) {
             this.handleError(error);
             // Có thể thêm hành động khác tùy thuộc vào yêu cầu của bạn, ví dụ trả về response lỗi cụ thể.
+        }
+    }
+    @UseInterceptors(FileInterceptor('file'))
+    @Put(':id')
+    async updateProduct(@Param('id')id:string,
+    @Body(new TrimBodyPipe())
+    dto:updateDto,
+    @UploadedFile() file)
+    {
+        try
+        {
+            const isValid=mongoose.Types.ObjectId.isValid(id)
+            if(!isValid)
+            {
+                throw new HttpException("Id không giống định dạng",HttpStatus.BAD_REQUEST);
+            }
+            const product=await this.productService.findProductById(toObjectId(id));
+            if(file)
+            {
+                const url = await this.cloudinaryService.uploadImage(file);
+                dto.imageUrl = url;
+            }
+            else
+            {
+                dto.imageUrl=product.imageUrl
+            }
+            const result=await this.productService.updateProduct(toObjectId(id),dto);
+            if(result)
+                return new SuccessResponse(result)
+            throw new HttpException("Cập nhật thất bại",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        catch(error)
+        {
+            this.handleError(error);
         }
     }
     @Get(':id')
