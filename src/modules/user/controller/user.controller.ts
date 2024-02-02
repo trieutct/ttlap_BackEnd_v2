@@ -9,7 +9,7 @@ import { SuccessResponse } from "src/common/helper/response";
 import mongoose from "mongoose";
 import { toObjectId } from "src/common/helper/commonFunction";
 
-@Controller('product')
+@Controller('user')
 export class UserController extends BaseController{
     constructor(
         private readonly UserService: UserService,private readonly cloudinaryService:CloudinaryService

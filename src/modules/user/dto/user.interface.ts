@@ -1,14 +1,16 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsOptional, IsString, Matches } from "class-validator";
 import {  UserOrderBy } from "../user.constant";
 import { CommonListQuery } from "src/common/interfaces";
+const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 export class createUserDto{
     @IsNotEmpty({ message: 'Không được để trống' })
     @IsString({ message: 'Phải là một chuỗi' })
     name: string;
 
-    @IsNotEmpty({ message: 'Không được để trống' })
     @IsString({ message: 'Phải là một chuỗi' })
+    @Matches(emailRegex, { message: 'Email không đúng định dạng' })
+    @IsNotEmpty({message:'Vui lòng nhập đầy đủ thông tin'})
     email: string;
 
     @IsNotEmpty({ message: 'Không được để trống' })
@@ -23,9 +25,10 @@ export class createUserDto{
     @IsString({ message: 'Phải là một chuỗi' })
     phone: string;
     
-    @IsNotEmpty({ message: 'Không được để trống' })
+    
     @IsString()
-    role: string;
+    @IsOptional()
+    role?: string;
 
     @IsString()
     @IsOptional()
@@ -38,8 +41,9 @@ export class UpdateUserDto{
     @IsString({ message: 'Phải là một chuỗi' })
     name: string;
 
-    @IsNotEmpty({ message: 'Không được để trống' })
     @IsString({ message: 'Phải là một chuỗi' })
+    @Matches(emailRegex, { message: 'Email không đúng định dạng' })
+    @IsNotEmpty({message:'Vui lòng nhập đầy đủ thông tin'})
     email: string;
 
     @IsNotEmpty({ message: 'Không được để trống' })
@@ -54,9 +58,9 @@ export class UpdateUserDto{
     @IsString({ message: 'Phải là một chuỗi' })
     phone: string;
     
-    @IsNotEmpty({ message: 'Không được để trống' })
     @IsString()
-    role: string;
+    @IsOptional()
+    role?: string;
 
     @IsString()
     @IsOptional()
