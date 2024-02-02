@@ -4,8 +4,7 @@ import { User } from "src/database/schemas/user.schema";
 import { AuthRepository } from "./auth.repository";
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from "./auth.interface";
-import { jwtConstants } from "./constant";
-
+import { jwtConstants } from "src/common/constants";
 
 @Injectable()
 export class AuthService extends BaseService<User,AuthRepository>
