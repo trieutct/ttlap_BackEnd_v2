@@ -91,7 +91,7 @@ export class ProductRepository extends BaseRepository<Product>{
             ]);
             return {
                 totalItems: result?.count?.[0]?.total || 0,
-                items: result?.data || [],
+                data: result?.data || [],
             };
         } catch (error) {
             this.logger.error(
