@@ -45,7 +45,8 @@ export class AuthService extends BaseService<User,AuthRepository>
                 },
                 profile:{
                     email:data.email,
-                    _id:data.id
+                    _id:data.id,
+                    role:data.role
                 }
             };
     }
