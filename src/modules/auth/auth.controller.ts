@@ -19,7 +19,6 @@ export class AuthController extends BaseController{
         // console.log(dto)
         try {
             const result = await this.authService.Login(dto);
-            
             return new SuccessResponse(result);
         } catch (error) {
             this.handleError(error);
