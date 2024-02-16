@@ -25,11 +25,18 @@ export class ProductController extends BaseController{
     @Post()
     async create(@Body(new TrimBodyPipe()) dto: createDto,@UploadedFile() file,)
     {
+        // console.log(dto)
+        // console.log(file)
         try{
-            if (file != null) {
-                const url = await this.cloudinaryService.uploadImage(file);
-                dto.imageUrl = url;
+            if (file == null) {
+                throw new HttpException("Vui lòng chọn ảnh",HttpStatus.BAD_REQUEST);
+                
             }
+            // console.log("vào")
+            // const url = await this.cloudinaryService.uploadImage(file);
+            // dto.imageUrl = url;
+            dto.imageUrl = 'https://scontent.fhph2-1.fna.fbcdn.net/v/t39.30808-6/405270929_3734295376897775_6745873818454262834_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=CLsOBI1M5EUAX9PY3S-&_nc_ht=scontent.fhph2-1.fna&oh=00_AfAQgNdidp1LDzG3SNLxcGRH7O-Lyoz5ItY6g_rfdse-mQ&oe=65D3849D';
+            // console.log("xong ảnh")
             const result=await this.productService.createProduct(dto)
             return new SuccessResponse(result)
         }catch (error) {
