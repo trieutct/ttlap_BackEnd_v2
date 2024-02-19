@@ -5,7 +5,7 @@ import { ProductController } from "./controller/product.controller";
 import { ProductService } from "./service/product.service";
 import { ProductRepository } from "./repository/product.repository";
 import { CloudinaryService } from "../../common/cloudinary/cloudinary.service";
-
+import { JwtService } from "@nestjs/jwt";
 @Module({
     imports: [
         MongooseModule.forFeature([
@@ -13,7 +13,7 @@ import { CloudinaryService } from "../../common/cloudinary/cloudinary.service";
         ]),
     ],
     controllers: [ProductController],
-    providers: [ProductService, ProductRepository,CloudinaryService],
+    providers: [ProductService, ProductRepository,CloudinaryService,JwtService],
     exports: [ProductRepository],
 })
 export class ProductModule {}

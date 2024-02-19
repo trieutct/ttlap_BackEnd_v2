@@ -70,3 +70,9 @@ export const MAX_INTEGER = 2147483647;
 export const PASSWORD_MIN_LENGTH = 6;
 export const MIN_PRICE = 0;
 export const MAX_PRICE = Number.MAX_SAFE_INTEGER;
+
+
+export enum RoleCollection {
+    USERS = 'User',
+    Admin='Admin'
+}
