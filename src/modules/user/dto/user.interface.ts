@@ -1,9 +1,9 @@
 import { IsNotEmpty, IsNumber, IsOptional, IsString, Matches } from "class-validator";
 import {  UserOrderBy } from "../user.constant";
-import { CommonListQuery } from "../../../common/interfaces";
+import { CommonDto, CommonListQuery } from "../../../common/interfaces";
 const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
-export class createUserDto{
+export class createUserDto extends CommonDto{
     @IsNotEmpty({ message: 'Không được để trống' })
     @IsString({ message: 'Phải là một chuỗi' })
     name: string;
@@ -13,9 +13,9 @@ export class createUserDto{
     @IsNotEmpty({message:'Vui lòng nhập đầy đủ thông tin'})
     email: string;
 
-    @IsNotEmpty({ message: 'Không được để trống' })
+    @IsOptional()
     @IsString({ message: 'Phải là một chuỗi' })
-    password: string;
+    password?: string;
 
     @IsNotEmpty({ message: 'Không được để trống' })
     @IsString({ message: 'Phải là một chuỗi' })
@@ -36,7 +36,7 @@ export class createUserDto{
 }
 
 
-export class UpdateUserDto{
+export class UpdateUserDto extends CommonDto{
     @IsNotEmpty({ message: 'Không được để trống' })
     @IsString({ message: 'Phải là một chuỗi' })
     name: string;
@@ -45,10 +45,6 @@ export class UpdateUserDto{
     @Matches(emailRegex, { message: 'Email không đúng định dạng' })
     @IsNotEmpty({message:'Vui lòng nhập đầy đủ thông tin'})
     email: string;
-
-    @IsNotEmpty({ message: 'Không được để trống' })
-    @IsString({ message: 'Phải là một chuỗi' })
-    password: string;
 
     @IsNotEmpty({ message: 'Không được để trống' })
     @IsString({ message: 'Phải là một chuỗi' })

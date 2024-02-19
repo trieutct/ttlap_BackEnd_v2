@@ -17,7 +17,9 @@ export class AuthService extends BaseService<User,AuthRepository>
     }
     async Login(dto:LoginDto)
     {
-        const data=await this.authRepository.findOne(dto);
+        try
+        {
+            const data=await this.authRepository.findOne(dto);
         if(!data)
             return null
             const access_token = await this.jwtService.signAsync(
@@ -49,5 +51,10 @@ export class AuthService extends BaseService<User,AuthRepository>
                     role:data.role
                 }
             };
+        }catch(error)
+        {
+            this.logger.error('Error in autherService login: ' + error);
+            throw error;
+        }
     }
 }

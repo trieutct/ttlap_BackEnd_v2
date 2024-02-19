@@ -32,10 +32,12 @@ export class BaseRepository<T extends MongoBaseSchema>{
             throw error;
         }
     }
-    async softDeleteOne(filter: FilterQuery<SchemaDocument<T>>) {
+    async softDeleteOne(filter: FilterQuery<SchemaDocument<T>>,idUser?:string) {
         try {
+            // console.log(idUser)
             return this.model.updateOne(filter, {
                 deletedAt: new Date(),
+                deletedBy:idUser
             });
         } catch (error) {
             this.logger.error(`Error in BaseRepository softDelete: ${error}`);

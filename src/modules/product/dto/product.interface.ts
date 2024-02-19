@@ -1,8 +1,8 @@
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 import { ProductOrderBy } from "../product.constants";
-import { CommonListQuery } from "../../../common/interfaces";
+import { CommonDto, CommonListQuery } from "../../../common/interfaces";
 
-export class createDto{
+export class createDto extends CommonDto{
     @IsNotEmpty({ message: 'Không được để trống' })
     @IsString({ message: 'Tên sản phẩm phải là một chuỗi' })
     name: string;
@@ -21,7 +21,7 @@ export class createDto{
     @IsOptional()
     imageUrl?: string;
 }
-export class updateDto{
+export class updateDto extends CommonDto{
     @IsNotEmpty({ message: 'Không được để trống' })
     @IsString({ message: 'Tên sản phẩm phải là một chuỗi' })
     name: string;

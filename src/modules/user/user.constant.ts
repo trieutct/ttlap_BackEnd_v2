@@ -17,4 +17,8 @@ export const UserAttributesForList: (keyof User)[] = [
     'name',
     'phone',
     'role',
+    'deletedAt',
+    'deletedBy',
+    'updatedBy',
+    'createdBy'
 ];

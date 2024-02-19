@@ -38,9 +38,9 @@ export class ProductService extends BaseService<Product,ProductRepository>
             throw error;
         }
     }
-    async deleteProduct(id: Types.ObjectId) {
+    async deleteProduct(id: Types.ObjectId,idUser:string) {
         try {
-            await this.productRepository.softDeleteOne({ _id: id });
+            await this.productRepository.softDeleteOne({ _id: id },idUser);
             return { id };
         } catch (error) {
             this.logger.error('Error in ProductService deleteProduct: ' + error);

@@ -5,6 +5,7 @@ import { UserController } from "./controller/user.controller";
 import { UserService } from "./service/user.service";
 import { UserRepository } from "./repositoy/user.repository";
 import { CloudinaryService } from "../../common/cloudinary/cloudinary.service";
+import { JwtService } from "@nestjs/jwt";
 
 @Module({
     imports: [
@@ -13,7 +14,7 @@ import { CloudinaryService } from "../../common/cloudinary/cloudinary.service";
         ]),
     ],
     controllers: [UserController],
-    providers: [UserService, UserRepository,CloudinaryService],
+    providers: [UserService, UserRepository,CloudinaryService,JwtService],
     exports: [UserRepository],
 })
 export class UserModule {}
