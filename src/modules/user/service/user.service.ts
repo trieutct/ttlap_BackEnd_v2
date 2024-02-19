@@ -27,7 +27,7 @@ export class UserService extends BaseService<User,UserRepository>
             throw error;
         }
     }
-    async findProductById(
+    async findUserById(
         id: Types.ObjectId,
         attributes: (keyof User)[] = UserAttributesForList,
     ) {
@@ -61,7 +61,7 @@ export class UserService extends BaseService<User,UserRepository>
     async updateUser(id: Types.ObjectId, dto: UpdateUserDto) {
         try {
             await this.userRepository.updateOneById(id, dto);
-            return await this.findProductById(id);
+            return await this.findUserById(id);
         } catch (error) {
             this.logger.error('Error in ProductService updateProduct: ' + error);
             throw error;

@@ -6,9 +6,8 @@ export class RolesGuard implements CanActivate {
     constructor(private readonly reflector:Reflector){}
   canActivate(context: ExecutionContext): boolean{
     const request=context.switchToHttp().getRequest()
-    console.log(request)
     const role= this.reflector.getAllAndMerge(ROLES_KEY,[context.getClass(),context.getHandler()])
-    if(role===request.user.data.role)
+    if(role===request.loggedInUser.data.role)
         return true
     return false
   }

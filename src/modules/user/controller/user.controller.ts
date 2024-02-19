@@ -21,15 +21,19 @@ export class UserController extends BaseController{
     {
         return await this.UserService.findAllAndCountUserByQuery(query);
     }
-    @UseInterceptors(FileInterceptor('file'))
+    // @UseInterceptors(FileInterceptor('file'))
     @Post()
-    async create(@Body(new TrimBodyPipe()) dto: createUserDto,@UploadedFile() file,)
+    async create(@Body(new TrimBodyPipe()) dto: createUserDto,
+    // @UploadedFile() file,
+    )
     {
+        // console.log(dto)
         try{
-            if (file != null) {
-                const url = await this.cloudinaryService.uploadImage(file);
-                dto.avatar = url;
-            }
+            // if (file != null) {
+            //     const url = await this.cloudinaryService.uploadImage(file);
+            //     dto.avatar = url;
+            // }
+            dto.password="t12345678"
             const result=await this.UserService.createUser(dto)
             return new SuccessResponse(result)
         }catch (error) {
@@ -51,7 +55,7 @@ export class UserController extends BaseController{
             {
                 throw new HttpException("Id không giống định dạng",HttpStatus.BAD_REQUEST);
             }
-            const product=await this.UserService.findProductById(toObjectId(id));
+            const product=await this.UserService.findUserById(toObjectId(id));
             if(file)
             {
                 const url = await this.cloudinaryService.uploadImage(file);
@@ -80,7 +84,7 @@ export class UserController extends BaseController{
             {
                 throw new HttpException("Id không giống định dạng",HttpStatus.BAD_REQUEST);
             }
-            const result = await this.UserService.findProductById(toObjectId(id));
+            const result = await this.UserService.findUserById(toObjectId(id));
             if(result)
                 return new SuccessResponse(result);
             throw new HttpException("Không tìm thấy product",HttpStatus.NOT_FOUND);
