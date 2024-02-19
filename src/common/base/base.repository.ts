@@ -42,7 +42,14 @@ export class BaseRepository<T extends MongoBaseSchema>{
             throw error;
         }
     }
-
+    async getCount() {
+        try {
+            return this.model.countDocuments(softDeleteCondition);
+        } catch (error) {
+            this.logger.error(`Error in BaseRepository countAll: ${error}`);
+            throw error;
+        }
+    }
     async getOneById(id: SchemaId, attributes: SchemaAttribute<T>[]) {
         try {
             return this.model.findOne(

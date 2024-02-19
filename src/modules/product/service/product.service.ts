@@ -67,4 +67,13 @@ export class ProductService extends BaseService<Product,ProductRepository>
             throw error;
         }
     }
+    async getCount()
+    {
+        try{
+            return await this.productRepository.getCount()
+        }catch (error) {
+            this.logger.error('Error in ProductService updateProduct: ' + error);
+            throw error;
+        }
+    }
 }

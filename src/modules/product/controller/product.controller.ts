@@ -49,7 +49,7 @@ export class ProductController extends BaseController{
     async updateProduct(@Param('id')id:string,
     @Body(new TrimBodyPipe())
     dto:updateDto,
-    @UploadedFile() file)
+    @UploadedFile() file?)
     {
         try
         {
@@ -61,8 +61,10 @@ export class ProductController extends BaseController{
             const product=await this.productService.findProductById(toObjectId(id));
             if(file)
             {
-                const url = await this.cloudinaryService.uploadImage(file);
-                dto.imageUrl = url;
+                // const url = await this.cloudinaryService.uploadImage(file);
+                // dto.imageUrl = url;
+                dto.imageUrl = 'https://scontent.fhph2-1.fna.fbcdn.net/v/t39.30808-6/405270929_3734295376897775_6745873818454262834_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=CLsOBI1M5EUAX9PY3S-&_nc_ht=scontent.fhph2-1.fna&oh=00_AfAQgNdidp1LDzG3SNLxcGRH7O-Lyoz5ItY6g_rfdse-mQ&oe=65D3849D';
+
             }
             else
             {
@@ -74,6 +76,19 @@ export class ProductController extends BaseController{
             throw new HttpException("Cập nhật thất bại",HttpStatus.INTERNAL_SERVER_ERROR);
         }
         catch(error)
+        {
+            this.handleError(error);
+        }
+    }
+    @Get('getCount')
+    async getCount()
+    {
+        try
+        {
+            const res= await this.productService.getCount()
+            console.log(res)
+            return new SuccessResponse(res)
+        }catch(error)
         {
             this.handleError(error);
         }
