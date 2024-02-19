@@ -80,19 +80,6 @@ export class ProductController extends BaseController{
             this.handleError(error);
         }
     }
-    @Get('getCount')
-    async getCount()
-    {
-        try
-        {
-            const res= await this.productService.getCount()
-            console.log(res)
-            return new SuccessResponse(res)
-        }catch(error)
-        {
-            this.handleError(error);
-        }
-    }
     @Get(':id')
     async getProductById(@Param('id')id:string,)
     {
