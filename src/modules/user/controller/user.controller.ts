@@ -4,15 +4,14 @@ import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, 
 import { TrimBodyPipe } from "../../../common/helper/pipe/trim.body.pipe";
 import { GetUserListQuery, createUserDto, UpdateUserDto } from "../dto/user.interface";
 import { CloudinaryService } from "../../../common/cloudinary/cloudinary.service";
-import { FileInterceptor } from "@nestjs/platform-express";
 import { SuccessResponse } from "../../../common/helper/response";
 import mongoose from "mongoose";
 import { toObjectId } from "../../../common/helper/commonFunction";
-import { LoggedInUser } from "src/modules/decorator/loggedInUser.decorator";
-import { Role } from "src/modules/decorator/roles.decorator";
-import { RoleCollection } from "src/common/constants";
-import { AuthGuard } from "src/modules/auth/auth.guard";
-import { RolesGuard } from "src/modules/auth/role.guard";
+import { LoggedInUser } from "../../../modules/decorator/loggedInUser.decorator";
+import { Role } from "../../../modules/decorator/roles.decorator";
+import { RoleCollection } from "../../../common/constants";
+import { AuthGuard } from "../../../modules/auth/auth.guard";
+import { RolesGuard } from "../../../modules/auth/role.guard";
 
 @Controller('user')
 export class UserController extends BaseController{

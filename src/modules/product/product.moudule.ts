@@ -8,7 +8,7 @@ import { CloudinaryService } from "../../common/cloudinary/cloudinary.service";
 import { JwtService } from "@nestjs/jwt";
 import { UserService } from "../user/service/user.service";
 import { UserRepository } from "../user/repositoy/user.repository";
-import { User, UserSchema } from "src/database/schemas/user.schema";
+import { User, UserSchema } from "../../database/schemas/user.schema";
 @Module({
     imports: [
         MongooseModule.forFeature([

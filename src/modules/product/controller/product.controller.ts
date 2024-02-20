@@ -29,10 +29,10 @@ import { SuccessResponse } from '../../../common/helper/response';
 import mongoose from 'mongoose';
 import { toObjectId } from '../../../common/helper/commonFunction';
 import { AuthGuard } from '../../../modules/auth/auth.guard';
-import { Role } from 'src/modules/decorator/roles.decorator';
-import { RoleCollection } from 'src/common/constants';
-import { RolesGuard } from 'src/modules/auth/role.guard';
-import { LoggedInUser } from 'src/modules/decorator/loggedInUser.decorator';
+import { Role } from '../../../modules/decorator/roles.decorator';
+import { RoleCollection } from '../../../common/constants';
+import { RolesGuard } from '../../../modules/auth/role.guard';
+import { LoggedInUser } from '../../../modules/decorator/loggedInUser.decorator';
 @Controller('product')
 export class ProductController extends BaseController {
   constructor(

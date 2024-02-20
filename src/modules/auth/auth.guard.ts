@@ -9,7 +9,6 @@ import {
   import { jwtConstants } from '../../common/constants';
   import { Request } from 'express';
 import { UserService } from '../user/service/user.service';
-import { toObjectId } from 'src/common/helper/commonFunction';
   
   @Injectable()
   export class AuthGuard implements CanActivate {
