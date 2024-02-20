@@ -54,18 +54,22 @@ export class ProductController extends BaseController {
   async create(@Body(new TrimBodyPipe()) dto: createDto, @UploadedFile() file,@LoggedInUser() loggedInUser) {
     try {
       // console.log(loggedInUser.data.id)
-      dto.createdBy=loggedInUser.data.id
+      
       // if (file == null) {
-      //   throw new HttpException('Vui lòng chọn ảnh', HttpStatus.BAD_REQUEST);
-      // }
-      // const url = await this.cloudinaryService.uploadImage(file);
-      // dto.imageUrl = url;
+        //   throw new HttpException('Vui lòng chọn ảnh', HttpStatus.BAD_REQUEST);
+        // }
+        // const url = await this.cloudinaryService.uploadImage(file);
+        // dto.imageUrl = url;
+      if(await this.productService.finProductByName(dto.name))
+      {
+        throw new HttpException('Tên sản phẩm đã tồn tại',HttpStatus.BAD_REQUEST);
+      }
+      dto.createdBy=loggedInUser.data.id
       dto.imageUrl = 'https://scontent.fhph2-1.fna.fbcdn.net/v/t39.30808-6/405270929_3734295376897775_6745873818454262834_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=CLsOBI1M5EUAX9PY3S-&_nc_ht=scontent.fhph2-1.fna&oh=00_AfAQgNdidp1LDzG3SNLxcGRH7O-Lyoz5ItY6g_rfdse-mQ&oe=65D3849D';
       const result = await this.productService.createProduct(dto);
       return new SuccessResponse(result);
     } catch (error) {
       this.handleError(error);
-      // Có thể thêm hành động khác tùy thuộc vào yêu cầu của bạn, ví dụ trả về response lỗi cụ thể.
     }
   }
   @Role(RoleCollection.Admin)
@@ -88,11 +92,12 @@ export class ProductController extends BaseController {
         );
       }
       const product = await this.productService.findProductById(toObjectId(id));
+      if(!product)
+        throw new HttpException('Sản phẩm không tồn tại',HttpStatus.BAD_REQUEST);
       if (file) {
-        // const url = await this.cloudinaryService.uploadImage(file);
-        // dto.imageUrl = url;
-        dto.imageUrl =
-          'https://scontent.fhph2-1.fna.fbcdn.net/v/t39.30808-6/405270929_3734295376897775_6745873818454262834_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=CLsOBI1M5EUAX9PY3S-&_nc_ht=scontent.fhph2-1.fna&oh=00_AfAQgNdidp1LDzG3SNLxcGRH7O-Lyoz5ItY6g_rfdse-mQ&oe=65D3849D';
+        const url = await this.cloudinaryService.uploadImage(file);
+        dto.imageUrl = url;
+        // dto.imageUrl ='https://scontent.fhph2-1.fna.fbcdn.net/v/t39.30808-6/405270929_3734295376897775_6745873818454262834_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=CLsOBI1M5EUAX9PY3S-&_nc_ht=scontent.fhph2-1.fna&oh=00_AfAQgNdidp1LDzG3SNLxcGRH7O-Lyoz5ItY6g_rfdse-mQ&oe=65D3849D';
       } else {
         dto.imageUrl = product.imageUrl;
       }
@@ -124,7 +129,7 @@ export class ProductController extends BaseController {
       }
       const result = await this.productService.findProductById(toObjectId(id));
       if (result) return new SuccessResponse(result);
-      throw new HttpException('Không tìm thấy product', HttpStatus.NOT_FOUND);
+        throw new HttpException('Không tìm thấy product', HttpStatus.NOT_FOUND);
     } catch (error) {
       this.handleError(error);
     }

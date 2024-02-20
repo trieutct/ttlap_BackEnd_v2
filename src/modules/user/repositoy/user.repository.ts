@@ -37,8 +37,13 @@ export class UserRepository extends BaseRepository<User>{
             ];
     
             if (keyword) {
+                // console.log(keyword)
                 matchQuery.$and.push({
-                    name: { $regex: `.*${keyword}.*`, $options: 'i' },
+                    $or: [
+                        { name: { $regex: `.*${keyword}.*`, $options: 'i' } },
+                        { phone: { $regex: `.*${keyword}.*`, $options: 'i' } },
+                        { email: { $regex: `.*${keyword}.*`, $options: 'i' } }
+                    ]
                 });
             }
     

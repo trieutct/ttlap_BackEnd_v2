@@ -67,4 +67,15 @@ export class ProductService extends BaseService<Product,ProductRepository>
             throw error;
         }
     }
+    async finProductByName(name:string)
+    {
+        try{
+            return await this.productRepository.findOne({
+                name:name
+            })
+        }catch (error) {
+            this.logger.error('Error in UserService updateUser: ' + error);
+            throw error;
+        }
+    }
 }
