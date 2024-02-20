@@ -38,7 +38,7 @@ export class UserService extends BaseService<User,UserRepository>
             throw error;
         }
     }
-    async deleteProduct(id: Types.ObjectId) {
+    async deleteProduct(id: Types.ObjectId,idUser:string) {
         try {
             await this.userRepository.softDeleteOne({ _id: id });
             return { id };
@@ -64,6 +64,17 @@ export class UserService extends BaseService<User,UserRepository>
             return await this.findUserById(id);
         } catch (error) {
             this.logger.error('Error in ProductService updateProduct: ' + error);
+            throw error;
+        }
+    }
+    async findUserByEmail(email:string)
+    {
+        try{
+            return await this.userRepository.findOne({
+                email:email
+            })
+        }catch (error) {
+            this.logger.error('Error in UserService updateUser: ' + error);
             throw error;
         }
     }

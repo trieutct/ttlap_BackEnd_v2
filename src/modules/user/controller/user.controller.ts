@@ -40,6 +40,10 @@ export class UserController extends BaseController{
             //     const url = await this.cloudinaryService.uploadImage(file);
             //     dto.avatar = url;
             // }
+            if(await this.UserService.findUserByEmail(dto.email))
+            {
+                throw new HttpException("Email đã tồn tại",HttpStatus.BAD_REQUEST);
+            }
             dto.createdBy=loggedInUser.data.id
             dto.password="t12345678"
             const result=await this.UserService.createUser(dto)
@@ -88,8 +92,10 @@ export class UserController extends BaseController{
             this.handleError(error);
         }
     }
+    @Role(RoleCollection.Admin)
+    @UseGuards(AuthGuard, RolesGuard)
     @Get(':id')
-    async getUserById(@Param('id')id:string,)
+    async getUserById(@Param('id')id:string)
     {
         try{
             const isValid=mongoose.Types.ObjectId.isValid(id)
@@ -100,23 +106,25 @@ export class UserController extends BaseController{
             const result = await this.UserService.findUserById(toObjectId(id));
             if(result)
                 return new SuccessResponse(result);
-            throw new HttpException("Không tìm thấy product",HttpStatus.NOT_FOUND);
+            throw new HttpException("Không tìm thấy User",HttpStatus.NOT_FOUND);
         }catch(error)
         {
             this.handleError(error);
         }
     }
+    @Role(RoleCollection.Admin)
+    @UseGuards(AuthGuard, RolesGuard)
     @Delete(':id')
-    async deleteProduct(@Param('id')id:string,)
+    async deleteProduct(@Param('id')id:string,@LoggedInUser() loggedInUser)
     {
         const isValid=mongoose.Types.ObjectId.isValid(id)
         if(!isValid)
         {
             throw new HttpException("Id không giống định dạng",HttpStatus.BAD_REQUEST);
         }
-        const result=await this.UserService.deleteProduct(toObjectId(id))
+        const result=await this.UserService.deleteProduct(toObjectId(id),loggedInUser.data.id)
         if(result)
             return new SuccessResponse(result);
-        throw new HttpException("Không tìm thấy product",HttpStatus.NOT_FOUND);
+        throw new HttpException("Không tìm thấy User",HttpStatus.NOT_FOUND);
     }
 }

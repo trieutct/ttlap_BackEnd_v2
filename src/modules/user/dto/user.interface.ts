@@ -30,9 +30,9 @@ export class createUserDto extends CommonDto{
     @IsOptional()
     role?: string;
 
-    @IsString()
-    @IsOptional()
-    avatar?: string;
+    @IsNotEmpty({ message: 'Ảnh không được để trống' })
+    @IsString({ message: 'Ảnh phải là một chuỗi' })
+    avatar: string;
 }
 
 
@@ -65,4 +65,5 @@ export class UpdateUserDto extends CommonDto{
 
 export class GetUserListQuery extends CommonListQuery {
     orderBy?: UserOrderBy;
+    phone?:string
 }

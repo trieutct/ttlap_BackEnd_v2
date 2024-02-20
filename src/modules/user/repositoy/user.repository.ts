@@ -35,19 +35,19 @@ export class UserRepository extends BaseRepository<User>{
                     ...softDeleteCondition,
                 },
             ];
-
+    
             if (keyword) {
                 matchQuery.$and.push({
                     name: { $regex: `.*${keyword}.*`, $options: 'i' },
                 });
             }
-
+    
             // if (name) {
             //     matchQuery.$and.push({
             //         name,
             //     });
             // }
-
+    
             const [result] = await this.UserModel.aggregate([
                 {
                     $addFields: {
@@ -99,4 +99,5 @@ export class UserRepository extends BaseRepository<User>{
             throw error;
         }
     }
+    
 }

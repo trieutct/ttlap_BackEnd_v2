@@ -39,7 +39,7 @@ import { toObjectId } from 'src/common/helper/commonFunction';
       } catch {
         throw new HttpException({
             status: 419,
-            message: "Token expired"
+            message: "Hết thời gian đăng nhập. Vui lòng đăng nhập lại"
         }, 419)
       }
       return true;
