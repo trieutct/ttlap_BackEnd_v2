@@ -8,11 +8,9 @@ export class createDto extends CommonDto{
     name: string;
 
     @IsNotEmpty({ message: 'Không được để trống' })
-    @IsNumber({}, { message: 'Giá phải là một số' }) 
     price: number;
 
     @IsNotEmpty({ message: 'Không được để trống' })
-    @IsNumber({}, { message: 'Số lượng phải là một số' })
     quantity: number;
     
     @IsNotEmpty({ message: 'Không được để trống' })
