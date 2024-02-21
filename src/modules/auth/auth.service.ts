@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable ,UnauthorizedException} from "@nestjs/common";
 import { BaseService } from "../../common/base/base.service";
 import { User } from "../../database/schemas/user.schema";
 import { AuthRepository } from "./auth.repository";
@@ -57,4 +57,26 @@ export class AuthService extends BaseService<User,AuthRepository>
             throw error;
         }
     }
+
+
+    async refreshToken(refresh_token) {
+        try {
+            const {data} = await this.jwtService.verify(refresh_token, {
+                secret: jwtConstants.secret,
+              });
+              const access_token_new = await this.jwtService.signAsync(
+                { data },
+                {
+                    secret: jwtConstants.secret,
+                    expiresIn: jwtConstants.expiresIn,
+                },
+            );
+            return {
+                access_token_new:access_token_new,
+                expiresIn: jwtConstants.expiresIn,
+            }
+        } catch (e) {
+            throw new UnauthorizedException("Hết phiên đăng nhập. vui lòng đăng nhập lại");
+        }
+      }
 }

@@ -53,7 +53,6 @@ export class ProductController extends BaseController {
   @Post()
   async create(@Body(new TrimBodyPipe()) dto: createDto, @UploadedFile() file,@LoggedInUser() loggedInUser) {
     try {
-      console.log(loggedInUser.data.id)
       
       if (file == null) {
           throw new HttpException('Vui lòng chọn ảnh', HttpStatus.BAD_REQUEST);

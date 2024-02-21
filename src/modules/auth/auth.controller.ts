@@ -24,4 +24,10 @@ export class AuthController extends BaseController{
             this.handleError(error);
         }
     }
+    @Post('refresh')
+    async refresh(@Body() body:any)
+    {
+        // console.log(body)
+        return this.authService.refreshToken(body.refresh_token)
+    }
 }

@@ -1,7 +1,7 @@
 export const jwtConstants = {
     secret: 'DO NOT USE THIS VALUE. INSTEAD, CREATE A COMPLEX SECRET AND KEEP IT SAFE OUTSIDE OF THE SOURCE CODE.',
     expiresIn: 100,
-    refresh_expiresIn: 7200,
+    refresh_expiresIn: 1000,
 };
 
 export enum HttpStatus {
