@@ -72,9 +72,22 @@ export class AuthService extends BaseService<User,AuthRepository>
                     expiresIn: jwtConstants.expiresIn,
                 },
             );
+            const refresh_token_new = await this.jwtService.signAsync(
+                { data },
+                {
+                    secret: jwtConstants.secret,
+                    expiresIn: jwtConstants.refresh_expiresIn,
+                },
+            );
             return {
-                access_token_new:access_token_new,
-                expiresIn: jwtConstants.expiresIn,
+                accessToken: {
+                    token:access_token_new,
+                    expiresIn: jwtConstants.expiresIn,
+                },
+                refreshToken:{
+                    token: refresh_token_new,
+                    expiresIn: jwtConstants.refresh_expiresIn,
+                },
             }
         } catch (e) {
             throw new UnauthorizedException("Hết phiên đăng nhập. vui lòng đăng nhập lại");
