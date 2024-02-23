@@ -1,9 +1,10 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Post,HttpException } from "@nestjs/common";
 import { BaseController } from "../../common/base/base.controller";
 import { AuthService } from "./auth.service";
 import { TrimBodyPipe } from "../../common/helper/pipe/trim.body.pipe";
 import { LoginDto } from "./auth.interface";
-import { SuccessResponse } from "../../common/helper/response";
+import { ErrorResponse, SuccessResponse } from "../../common/helper/response";
+import { HttpStatus } from "src/common/constants";
 
 
 @Controller('auth')
@@ -19,7 +20,12 @@ export class AuthController extends BaseController{
         // console.log(dto)
         try {
             const result = await this.authService.Login(dto);
-            return new SuccessResponse(result);
+            if(result)
+                return new SuccessResponse(result);
+                throw new HttpException(
+                    'Tài khoản mật khẩu không chính xác',
+                    HttpStatus.BAD_REQUEST,
+                  );
         } catch (error) {
             this.handleError(error);
         }
