@@ -81,6 +81,13 @@ export class UserController extends BaseController{
             // }
             if(!user)
                 throw new HttpException("User không tồn tại",HttpStatus.BAD_REQUEST);
+            if(user.email!==dto.email)
+            {
+                if(this.UserService.findUserByEmail(dto.email))
+                {
+                    throw new HttpException("Email đã tồn tại",HttpStatus.BAD_REQUEST);
+                }
+            }
             dto.updatedBy=loggedInUser.data.id
             const result=await this.UserService.updateUser(toObjectId(id),dto);
             if(result)
