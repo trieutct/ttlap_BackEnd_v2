@@ -1,12 +1,13 @@
 import { Injectable } from "@nestjs/common"
 import { BaseRepository } from "../../../common/base/base.repository"
 import { InjectModel } from '@nestjs/mongoose';
-import { FilterQuery, Model } from 'mongoose';
+import { FilterQuery, Model, Types } from 'mongoose';
 import { GetUserListQuery } from "../dto/user.interface";
 import { DEFAULT_FIRST_PAGE, DEFAULT_LIMIT_FOR_PAGINATION, DEFAULT_ORDER_BY, DEFAULT_ORDER_DIRECTION,OrderDirection,softDeleteCondition } from "../../../common/constants";
 import { parseMongoProjection } from "../../../common/helper/commonFunction";
 import { UserAttributesForList } from "../user.constant";
 import { User, UserDocument } from "../../../database/schemas/user.schema";
+import { LoggedInUser } from "src/modules/decorator/loggedInUser.decorator";
 
 
 @Injectable()
@@ -19,7 +20,7 @@ export class UserRepository extends BaseRepository<User>{
     }
 
 
-    async findAllAndCountUserByQuery(query: GetUserListQuery) {
+    async findAllAndCountUserByQuery(query: GetUserListQuery, userId?: string) {
         try {
             const {
                 keyword = '',
@@ -37,13 +38,18 @@ export class UserRepository extends BaseRepository<User>{
             ];
     
             if (keyword) {
-                // console.log(keyword)
                 matchQuery.$and.push({
                     $or: [
                         { name: { $regex: `.*${keyword}.*`, $options: 'i' } },
                         { phone: { $regex: `.*${keyword}.*`, $options: 'i' } },
                         { email: { $regex: `.*${keyword}.*`, $options: 'i' } }
                     ]
+                });
+            }
+    
+            if (userId) {
+                matchQuery.$and.push({
+                    _id: { $ne: new Types.ObjectId(userId) }
                 });
             }
     
@@ -104,5 +110,6 @@ export class UserRepository extends BaseRepository<User>{
             throw error;
         }
     }
+    
     
 }

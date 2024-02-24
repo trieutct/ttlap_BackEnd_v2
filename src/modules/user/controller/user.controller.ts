@@ -20,10 +20,11 @@ export class UserController extends BaseController{
     ) {
         super();
     }
+    @UseGuards(AuthGuard)
     @Get()
-    async getall(@Query()query :GetUserListQuery)
+    async getall(@Query()query :GetUserListQuery,@LoggedInUser() user)
     {
-        return await this.UserService.findAllAndCountUserByQuery(query);
+        return await this.UserService.findAllAndCountUserByQuery(query,user.data.id);
     }
     // @UseInterceptors(FileInterceptor('file'))
     @Role(RoleCollection.Admin)
