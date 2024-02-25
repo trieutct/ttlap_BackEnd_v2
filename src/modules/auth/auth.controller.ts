@@ -4,7 +4,7 @@ import { AuthService } from "./auth.service";
 import { TrimBodyPipe } from "../../common/helper/pipe/trim.body.pipe";
 import { LoginDto } from "./auth.interface";
 import { ErrorResponse, SuccessResponse } from "../../common/helper/response";
-import { HttpStatus } from "src/common/constants";
+import { HttpStatus } from "../../common/constants";
 
 
 @Controller('auth')

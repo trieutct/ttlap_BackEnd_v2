@@ -7,7 +7,6 @@ import { DEFAULT_FIRST_PAGE, DEFAULT_LIMIT_FOR_PAGINATION, DEFAULT_ORDER_BY, DEF
 import { parseMongoProjection } from "../../../common/helper/commonFunction";
 import { UserAttributesForList } from "../user.constant";
 import { User, UserDocument } from "../../../database/schemas/user.schema";
-import { LoggedInUser } from "src/modules/decorator/loggedInUser.decorator";
 
 
 @Injectable()
