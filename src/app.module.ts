@@ -13,9 +13,9 @@ import { seedService } from './seed/seed.service';
   providers: [AppService,seedService],
 })
 export class AppModule implements OnModuleInit {
-  constructor(private readonly sampleSeeder: seedService) {}
+  constructor(private readonly seederService: seedService) {}
 
   async onModuleInit() {
-    await this.sampleSeeder.seedData();
+    await this.seederService.seedData();
   }
 }
