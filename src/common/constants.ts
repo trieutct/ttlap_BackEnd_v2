@@ -1,7 +1,7 @@
 export const jwtConstants = {
     secret: 'DO NOT USE THIS VALUE. INSTEAD, CREATE A COMPLEX SECRET AND KEEP IT SAFE OUTSIDE OF THE SOURCE CODE.',
     expiresIn: 100,
-    refresh_expiresIn: 150,
+    refresh_expiresIn: 350,
 };
 
 export enum HttpStatus {
@@ -69,7 +69,9 @@ export const INPUT_PHONE_MAX_LENGTH = 15;
 export const MAX_INTEGER = 2147483647;
 export const PASSWORD_MIN_LENGTH = 6;
 export const MIN_PRICE = 0;
-export const MAX_PRICE = Number.MAX_SAFE_INTEGER;
+export const MAX_PRICE = 1000000000;
+export const MIN_QUANTITY = 0;
+export const MAX_QUANTITY = 1000000000;
 
 
 export enum RoleCollection {

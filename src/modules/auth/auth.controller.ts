@@ -24,7 +24,7 @@ export class AuthController extends BaseController{
                 return new SuccessResponse(result);
                 throw new HttpException(
                     'Tài khoản mật khẩu không chính xác',
-                    HttpStatus.BAD_REQUEST,
+                    HttpStatus.UNAUTHORIZED,
                   );
         } catch (error) {
             this.handleError(error);
