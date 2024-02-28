@@ -5,7 +5,7 @@ import { TrimBodyPipe } from "../../common/helper/pipe/trim.body.pipe";
 import { LoginDto } from "./auth.interface";
 import { ErrorResponse, SuccessResponse } from "../../common/helper/response";
 import { HttpStatus } from "../../common/constants";
-import { BcryptService } from "src/common/helper/bcrypt";
+import { BcryptService } from "../../common/helper/bcrypt";
 
 
 @Controller('auth')

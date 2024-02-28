@@ -12,7 +12,7 @@ import { Role } from "../../../modules/decorator/roles.decorator";
 import { RoleCollection } from "../../../common/constants";
 import { AuthGuard } from "../../../modules/auth/auth.guard";
 import { RolesGuard } from "../../../modules/auth/role.guard";
-import { BcryptService } from "src/common/helper/bcrypt";
+import { BcryptService } from "../../../common/helper/bcrypt";
 
 @Controller('user')
 export class UserController extends BaseController{

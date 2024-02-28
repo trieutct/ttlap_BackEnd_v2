@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsNumber, IsOptional, IsString, Max, Min } from "class-validator";
 import { ProductOrderBy } from "../product.constants";
 import { CommonDto, CommonListQuery } from "../../../common/interfaces";
-import { MAX_PRICE, MAX_QUANTITY, MIN_PRICE, MIN_QUANTITY } from "src/common/constants";
+import { MAX_PRICE, MAX_QUANTITY, MIN_PRICE, MIN_QUANTITY } from "../../../common/constants";
 
 export class createDto extends CommonDto{
     @IsNotEmpty({ message: 'Không được để trống' })
