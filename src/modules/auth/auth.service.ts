@@ -5,6 +5,7 @@ import { AuthRepository } from "./auth.repository";
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from "./auth.interface";
 import { jwtConstants } from "../../common/constants";
+import { BcryptService } from "src/common/helper/bcrypt";
 
 @Injectable()
 export class AuthService extends BaseService<User,AuthRepository>
@@ -12,6 +13,7 @@ export class AuthService extends BaseService<User,AuthRepository>
     constructor(
         private readonly authRepository: AuthRepository,
         private jwtService: JwtService,
+        private readonly brypt:BcryptService
     ) {
         super(authRepository);
     }
@@ -19,23 +21,27 @@ export class AuthService extends BaseService<User,AuthRepository>
     {
         try
         {
-            const data=await this.authRepository.findOne(dto);
+            const data=await this.authRepository.findOne({email:dto.email});
+            // console.log(data)
         if(!data)
             return null
-            const access_token = await this.jwtService.signAsync(
-                { data },
-                {
-                    secret: jwtConstants.secret,
-                    expiresIn: jwtConstants.expiresIn,
-                },
-            );
-            const refresh_token = await this.jwtService.signAsync(
-                { data },
-                {
-                    secret: jwtConstants.secret,
-                    expiresIn: jwtConstants.refresh_expiresIn,
-                },
-            );
+
+        if(!await this.brypt.comparePassword(dto.password,data.password))
+            return null
+        const access_token = await this.jwtService.signAsync(
+            { data },
+            {
+                secret: jwtConstants.secret,
+                expiresIn: jwtConstants.expiresIn,
+            },
+        );
+        const refresh_token = await this.jwtService.signAsync(
+            { data },
+            {
+                secret: jwtConstants.secret,
+                expiresIn: jwtConstants.refresh_expiresIn,
+            },
+        );
             return {
                 accessToken: {
                     token:access_token,

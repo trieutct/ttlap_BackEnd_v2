@@ -12,11 +12,12 @@ import { Role } from "../../../modules/decorator/roles.decorator";
 import { RoleCollection } from "../../../common/constants";
 import { AuthGuard } from "../../../modules/auth/auth.guard";
 import { RolesGuard } from "../../../modules/auth/role.guard";
+import { BcryptService } from "src/common/helper/bcrypt";
 
 @Controller('user')
 export class UserController extends BaseController{
     constructor(
-        private readonly UserService: UserService,private readonly cloudinaryService:CloudinaryService
+        private readonly UserService: UserService,private readonly cloudinaryService:CloudinaryService,private readonly brypt:BcryptService
     ) {
         super();
     }
@@ -45,7 +46,7 @@ export class UserController extends BaseController{
                 throw new HttpException("Email đã tồn tại",HttpStatus.BAD_REQUEST);
             }
             dto.createdBy=loggedInUser.data.id
-            dto.password="t12345678"
+            dto.password=await this.brypt.hashPassword("t12345678")
             const result=await this.UserService.createUser(dto)
             return new SuccessResponse(result)
         }catch (error) {

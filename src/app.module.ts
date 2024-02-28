@@ -6,9 +6,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auht.module';
 import { seedService } from './seed/seed.service';
+import { config } from 'dotenv';
+config()
 @Module({
   imports: [ProductModule,UserModule,AuthModule,
-    MongooseModule.forRoot('mongodb+srv://trinhcongtrieu2972002:trieutct@trieu.q6n63sn.mongodb.net/'),],
+    MongooseModule.forRoot(process.env.MONGO_DATABASE_CONNECTION_STRING),],
   controllers: [AppController],
   providers: [AppService,seedService],
 })

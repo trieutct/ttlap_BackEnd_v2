@@ -5,11 +5,12 @@ import { TrimBodyPipe } from "../../common/helper/pipe/trim.body.pipe";
 import { LoginDto } from "./auth.interface";
 import { ErrorResponse, SuccessResponse } from "../../common/helper/response";
 import { HttpStatus } from "../../common/constants";
+import { BcryptService } from "src/common/helper/bcrypt";
 
 
 @Controller('auth')
 export class AuthController extends BaseController{
-    constructor(private readonly authService: AuthService) {
+    constructor(private readonly authService: AuthService, private readonly brypt:BcryptService) {
         super();
     }
     @Post('login')
@@ -22,10 +23,10 @@ export class AuthController extends BaseController{
             const result = await this.authService.Login(dto);
             if(result)
                 return new SuccessResponse(result);
-                throw new HttpException(
-                    'Tài khoản mật khẩu không chính xác',
-                    HttpStatus.UNAUTHORIZED,
-                  );
+            throw new HttpException(
+                'Tài khoản mật khẩu không chính xác',
+                HttpStatus.UNAUTHORIZED,
+                );
         } catch (error) {
             this.handleError(error);
         }

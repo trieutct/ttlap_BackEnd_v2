@@ -6,6 +6,7 @@ import { UserService } from "./service/user.service";
 import { UserRepository } from "./repositoy/user.repository";
 import { CloudinaryService } from "../../common/cloudinary/cloudinary.service";
 import { JwtService } from "@nestjs/jwt";
+import { BcryptService } from "src/common/helper/bcrypt";
 
 @Module({
     imports: [
@@ -14,7 +15,7 @@ import { JwtService } from "@nestjs/jwt";
         ]),
     ],
     controllers: [UserController],
-    providers: [UserService, UserRepository,CloudinaryService,JwtService],
+    providers: [UserService, UserRepository,CloudinaryService,JwtService,BcryptService],
     exports: [UserRepository,UserService],
 })
 export class UserModule {}
