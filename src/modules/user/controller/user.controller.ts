@@ -84,7 +84,7 @@ export class UserController extends BaseController{
                 throw new HttpException("User không tồn tại",HttpStatus.BAD_REQUEST);
             if(user.email!==dto.email)
             {
-                if(this.UserService.findUserByEmail(dto.email))
+                if(await this.UserService.findUserByEmail(dto.email))
                 {
                     throw new HttpException("Email đã tồn tại",HttpStatus.BAD_REQUEST);
                 }

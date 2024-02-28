@@ -93,6 +93,11 @@ export class ProductController extends BaseController {
       const product = await this.productService.findProductById(toObjectId(id));
       if(!product)
         throw new HttpException('Sản phẩm không tồn tại',HttpStatus.BAD_REQUEST);
+      if(product.name!==dto.name)
+      {
+        if(await this.productService.finProductByName(dto.name))
+          throw new HttpException('Sản phẩm đã tồn tại',HttpStatus.BAD_REQUEST);
+      }
       if (file) {
         const url = await this.cloudinaryService.uploadImage(file);
         dto.imageUrl = url;
