@@ -62,8 +62,8 @@ export class AuthController extends BaseController {
         jwtConstantsRegister.secret,
         jwtConstantsRegister.expiresIn,
       );
-      // await this.mailService.sendMail(dto.email,ContentRegister.subject,ContentRegister.text+`${process.env.LINK_FONT_END}/${token}`)
-      return ('http://localhost:3000/auth/verify/' + token);
+      await this.mailService.sendMail(dto.email,ContentRegister.subject,ContentRegister.text+`${process.env.LINK_FONT_END}/${token}`)
+      return ('https://ttlap-back-end-v2.vercel.app/auth/verify/' + token);
     } catch (error) {
       this.handleError(error);
     }
