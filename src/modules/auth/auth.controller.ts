@@ -63,7 +63,7 @@ export class AuthController extends BaseController {
         jwtConstantsRegister.expiresIn,
       );
       await this.mailService.sendMail(dto.email,ContentRegister.subject,ContentRegister.text+`${process.env.LINK_FONT_END}/${token}`)
-      return ('https://ttlap-back-end-v2.vercel.app/auth/verify/' + token);
+      return new SuccessResponse("Check Email");
     } catch (error) {
       this.handleError(error);
     }
@@ -72,6 +72,7 @@ export class AuthController extends BaseController {
   async Verify(@Param('token') token: string) {
     try {
       const { data } = await this.authService.verifyToken(token);
+      data.password=await this.brypt.hashPassword(data.password)
       const res= await this.authService.createUser(data)
       return new SuccessResponse(res)
     } catch (error) {
