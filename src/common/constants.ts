@@ -8,7 +8,7 @@ export const jwtConstantsRegister = {
     expiresIn: 120,
 };
 export const ContentRegister = {
-    subject:"Xác nhận đăng ký tài khoản --LEO STORE--",
+    subject:"XÁC NHẬN ĐĂNG KÝ TÀI KHOẢN CỬA HÀNG --LEO STORE--",
     text:"Vui lòng bấm vào link này để xác nhận: \n"
 };
 export enum HttpStatus {

@@ -120,7 +120,7 @@ export class AuthService extends BaseService<User, AuthRepository> {
     } catch (error) {
         throw new HttpException({
             status: 419,
-            message: "Hết thời gian đăng nhập. Vui lòng đăng nhập lại"
+            message: "Hết thời gian xác thực"
         }, 419)
     }
   }

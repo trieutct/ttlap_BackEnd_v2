@@ -68,13 +68,16 @@ export class AuthController extends BaseController {
       this.handleError(error);
     }
   }
-  @Get('verify/:token')
-  async Verify(@Param('token') token: string) {
+  @Get('vertify/:token')
+  async Vertify(@Param('token') token: string) {
     try {
       const { data } = await this.authService.verifyToken(token);
+      const check = await this.authService.checkEmaiL(data.email);
+      if (check) throw new HttpException('Email đã tồn tại', HttpStatus.CONFLICT);
       data.password=await this.brypt.hashPassword(data.password)
       const res= await this.authService.createUser(data)
       return new SuccessResponse(res)
+      // return new SuccessResponse("ok")
     } catch (error) {
       this.handleError(error);
     }
