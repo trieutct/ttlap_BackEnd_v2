@@ -15,7 +15,7 @@ export type UserDocument = SchemaDocument<User>;
 })
 export class User extends MongoBaseSchema {
     
-    @Prop({ required: true, type: String })
+    @Prop({ required: false, type: String,default:null })
     name: string;
 
     @Prop({ required: true, type: String })
@@ -24,13 +24,13 @@ export class User extends MongoBaseSchema {
     @Prop({ required: true, type: String })
     password: string;
 
-    @Prop({ required: true, type: String })
+    @Prop({ required: false, type: String,default:null  })
     birthday: string;
 
-    @Prop({ required: true, type: String })
+    @Prop({ required: false, type: String,default:null  })
     phone: string;
 
-    @Prop({ required: true, type: String })
+    @Prop({ required: false, type: String,default:null })
     avatar: string;
 
     @Prop({ required: true, type: String, default: RoleCollection.USERS })

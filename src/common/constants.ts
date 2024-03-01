@@ -3,7 +3,14 @@ export const jwtConstants = {
     expiresIn: 100,
     refresh_expiresIn: 350,
 };
-
+export const jwtConstantsRegister = {
+    secret: 'DO NOT USE THIS VALUE. INSTEAD, CREATE A COMPLEX SECRET AND KEEP IT SAFE OUTSIDE OF THE SOURCE CODE.',
+    expiresIn: 120,
+};
+export const ContentRegister = {
+    subject:"Xác nhận đăng ký tài khoản --LEO STORE--",
+    text:"Vui lòng bấm vào link này để xác nhận: \n"
+};
 export enum HttpStatus {
     OK = 200,
     BAD_REQUEST = 400,

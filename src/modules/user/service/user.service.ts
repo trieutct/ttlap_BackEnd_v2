@@ -17,13 +17,13 @@ export class UserService extends BaseService<User,UserRepository>
     async createUser(dto: createUserDto) {
         try {
             // console.log({...(dto as any)})
-            const product: SchemaCreateDocument<User> = {
+            const user: SchemaCreateDocument<User> = {
                 ...(dto as any),
             };
-            const res= await this.userRepository.createOne(product)
+            const res= await this.userRepository.createOne(user)
             return res;
         } catch (error) {
-            this.logger.error('Error in productService createproduct: ' + error);
+            this.logger.error('Error in userService createuser: ' + error);
             throw error;
         }
     }
