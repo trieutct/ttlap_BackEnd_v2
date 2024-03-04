@@ -85,3 +85,14 @@ export enum RoleCollection {
     USERS = 'User',
     Admin='Admin'
 }
+export const Regex={
+    NAME:/^[^[\]\\|'";:/?.>,<)(_=+!@#$%^&*`~0-9-]+$/,
+    EMAIL:/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+    PHONE:/^0\d{9,10}$/,
+    URL: /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/,
+    PASSWORD:/^(?=.*[a-zA-z])(?=.*\d).{8,}$/
+}
+export const MESSAGE_ERROR={
+    EMPTY:"Không được để trống",
+    STRING:"Phải là chuỗi",
+}
