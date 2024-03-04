@@ -1,6 +1,6 @@
 import { BaseController } from "../../../common/base/base.controller";
 import { UserService } from '../service/user.service';
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put, Query, UploadedFile, UseInterceptors, UsePipes, ValidationPipe,UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Patch, Query, UploadedFile, UseInterceptors, UsePipes, ValidationPipe,UseGuards } from "@nestjs/common";
 import { TrimBodyPipe } from "../../../common/helper/pipe/trim.body.pipe";
 import { GetUserListQuery, createUserDto, UpdateUserDto } from "../dto/user.interface";
 import { CloudinaryService } from "../../../common/cloudinary/cloudinary.service";
@@ -56,7 +56,7 @@ export class UserController extends BaseController{
     // @UseInterceptors(FileInterceptor('file'))
     @Role(RoleCollection.Admin)
     @UseGuards(AuthGuard, RolesGuard)
-    @Put(':id')
+    @Patch(':id')
     async update(@Param('id')id:string,
     @Body(new TrimBodyPipe())
     dto:UpdateUserDto,

@@ -16,6 +16,7 @@ import {
   UsePipes,
   ValidationPipe,
   UseGuards,
+  Patch
 } from '@nestjs/common';
 import { TrimBodyPipe } from '../../../common/helper/pipe/trim.body.pipe';
 import {
@@ -74,7 +75,7 @@ export class ProductController extends BaseController {
   @Role(RoleCollection.Admin)
   @UseGuards(AuthGuard, RolesGuard)
   @UseInterceptors(FileInterceptor('file'))
-  @Put(':id')
+  @Patch(':id')
   async updateProduct(
     @Param('id') id: string,
     @Body(new TrimBodyPipe())
@@ -92,7 +93,7 @@ export class ProductController extends BaseController {
       }
       const product = await this.productService.findProductById(toObjectId(id));
       if(!product)
-        throw new HttpException('Sản phẩm không tồn tại',HttpStatus.BAD_REQUEST);
+        throw new HttpException('Sản phẩm không tồn tại',HttpStatus.NOT_FOUND);
       if(product.name!==dto.name)
       {
         if(await this.productService.finProductByName(dto.name))
