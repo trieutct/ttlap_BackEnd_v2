@@ -17,9 +17,9 @@ export class createDto extends CommonDto{
     @Matches(/^-?\d+(\.\d+)?$/, { message: 'Số lượng không hợp lệ' })
     quantity: number;
     
-    @IsNotEmpty({ message: 'Không được để trống' })
+    @IsOptional()
     @IsString()
-    description: string;
+    description?: string;
 
     @IsString()
     @IsOptional()
@@ -39,9 +39,9 @@ export class updateDto extends CommonDto{
     @Matches(/^-?\d+(\.\d+)?$/, { message: 'Số lượng không hợp lệ' })
     quantity: number;
     
-    @IsNotEmpty({ message: 'Không được để trống' })
+    @IsOptional()
     @IsString()
-    description: string;
+    description?: string;
 
     @IsString()
     @IsOptional()
